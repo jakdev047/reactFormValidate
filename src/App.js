@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{ useState } from 'react';
 import './App.css';
 
-function App() {
+// import Input from './components/Input/Input';
+// import UncontrolForm from './components/UncontrolForm/UncontrolForm';
+// import ControlForm from './components/ControlForm/ControlForm';
+import Signup from './components/Signup/Signup';
+
+const App = () => {
+
+  const [users,setUsers] = useState([]); 
+
+  const createUser = user => {
+    user.id = new Date().getTime().toString();
+    setUsers([...users,user]);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+
+        <Signup createUser={createUser}/>
+
+        <h3>All register users</h3>
+        <ul className="list-group my-5">
+          {
+            users.map(user => {
+              return <li key={user.id} className="list-group-item">
+                {user.name} => {user.email}
+              </li>
+            })
+          }
+
+        </ul>
+
+        {/* <ControlForm/> */}
+        {/* <UncontrolForm/> */}
+        {/* <Input/> */}
+      </div>
     </div>
   );
 }
